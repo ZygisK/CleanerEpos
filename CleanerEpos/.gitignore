@@ -1,0 +1,41 @@
+# ===== .NET / ASP.NET Core =====
+bin/
+obj/
+*.dll
+*.pdb
+*.db
+*.db-shm
+*.db-wal
+*.log
+appsettings.*.json
+*.user
+*.suo
+*.userprefs
+*.vs/
+.vscode/
+.idea/
+
+# ===== macOS =====
+.DS_Store
+
+# ===== Node / React =====
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+dist/
+build/
+
+# ===== Environment / secrets =====
+.env
+.env.local
+.env.production
+.env.development
+
+# ===== Rider / JetBrains =====
+.idea/
+*.iml
+
+# ===== Other =====
+/coverage
