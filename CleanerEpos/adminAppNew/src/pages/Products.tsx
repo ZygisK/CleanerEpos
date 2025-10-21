@@ -1,8 +1,3 @@
-/**
- * Products Page (Placeholder)
- * API Calls: GET /api/Products, POST /api/Products, DELETE /api/Products/{id}
- */
-
 import React, { useEffect, useState } from 'react';
 import { Plus, Trash2, Edit, Search } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -40,7 +35,6 @@ export const Products: React.FC = () => {
     isAvailable: true,
   });
 
-  // Fetch products and categories
   const fetchProducts = async () => {
     try {
       // API Call: GET /api/Products
@@ -71,7 +65,6 @@ export const Products: React.FC = () => {
     fetchData();
   }, []);
 
-  // Filter products based on search term
   const filteredProducts = products.filter(product => {
     const searchLower = searchTerm.toLowerCase();
     return (
@@ -82,17 +75,14 @@ export const Products: React.FC = () => {
   });
 
 
-  // Handle edit product
   const handleEditProduct = (product: ProductModel) => {
     setEditingProduct(product);
     setIsEditModalOpen(true);
   };
 
-  // Handle save product (for both create and update)
   const handleSaveProduct = async () => {
     const product = editingProduct || newProduct;
     
-    // Validation
     if (!product.name.trim()) {
       toast.error('Product name is required');
       return;
@@ -124,13 +114,11 @@ export const Products: React.FC = () => {
     }
   };
 
-  // Handle delete product confirmation
   const handleDeleteProductClick = (product: ProductModel) => {
     setProductToDelete(product);
     setIsDeleteModalOpen(true);
   };
 
-  // Handle actual delete product
   const handleDeleteProduct = async () => {
     if (!productToDelete) return;
 

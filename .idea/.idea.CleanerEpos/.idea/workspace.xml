@@ -9,16 +9,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d5db17e-2123-4a83-a467-9ceb71d05b1d" name="Changes" comment="2nd commit">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.CleanerEpos/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CleanerEpos/.idea/dataSources.local.xml" afterDir="false" />
+    <list default="true" id="1d5db17e-2123-4a83-a467-9ceb71d05b1d" name="Changes" comment=".">
+      <change afterPath="$PROJECT_DIR$/CleanerEpos/Entities/Order.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CleanerEpos/Entities/OrderItem.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CleanerEpos/Mappings/OrderMapping.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CleanerEpos/Models/OrderItemModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CleanerEpos/Models/OrderModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CleanerEpos/.idea/dataSources/d0cc6387-5e53-40c4-a01e-dbed76facd8f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CleanerEpos/.idea/dataSources/d0cc6387-5e53-40c4-a01e-dbed76facd8f.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CleanerEpos/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CleanerEpos/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CleanerEpos/adminAppNew/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/CleanerEpos/adminAppNew/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CleanerEpos/adminAppNew/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/CleanerEpos/adminAppNew/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CleanerEpos/Data/ApplicationDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CleanerEpos/Data/ApplicationDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CleanerEpos/Helpers/SecurityDataInitializer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CleanerEpos/Helpers/SecurityDataInitializer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CleanerEpos/Mappings/MappingExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CleanerEpos/Mappings/MappingExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CleanerEpos/Migrations/ApplicationDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CleanerEpos/Migrations/ApplicationDbContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CleanerEpos/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CleanerEpos/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CleanerEpos/adminAppNew/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/CleanerEpos/adminAppNew/.env.example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CleanerEpos/adminAppNew/src/components/layout/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/CleanerEpos/adminAppNew/src/components/layout/Sidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CleanerEpos/adminAppNew/src/components/layout/TopBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/CleanerEpos/adminAppNew/src/components/layout/TopBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CleanerEpos/adminAppNew/src/pages/Products.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/CleanerEpos/adminAppNew/src/pages/Products.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DpaMonitoringSettings">
+    <option name="autoShow" value="false" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -32,7 +47,9 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="33qPu19okL4WThS8KzvaLbCMQtg" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -47,6 +64,8 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "advanced.settings",
+    "ts.external.directory.path": "/Users/zygimantas/RiderProjects/CleanerEpos/CleanerEpos/adminAppNew/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -98,7 +117,7 @@
       <workItem from="1760041849085" duration="59000" />
       <workItem from="1760041919965" duration="170000" />
       <workItem from="1760042102387" duration="492000" />
-      <workItem from="1760042606900" duration="4871000" />
+      <workItem from="1760042606900" duration="16668000" />
     </task>
     <task id="LOCAL-00002" summary="commit">
       <option name="closed" value="true" />
@@ -132,7 +151,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760094207004</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary=".">
+      <option name="closed" value="true" />
+      <created>1760431384157</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1760431384157</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -144,6 +171,7 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="commit" />
     <MESSAGE value="2nd commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="2nd commit" />
+    <MESSAGE value="." />
+    <option name="LAST_COMMIT_MESSAGE" value="." />
   </component>
 </project>

@@ -1,7 +1,3 @@
-/**
- * Top Bar Component
- */
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Menu, LogOut } from 'lucide-react';

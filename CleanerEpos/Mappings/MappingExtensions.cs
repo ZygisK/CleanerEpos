@@ -12,5 +12,6 @@ public static class MappingExtensions
         cfg.AddProfile<ApplicationUserMappings>();
         cfg.AddProfile<ProductMapping>();
         cfg.AddProfile<CategoryMapping>();
+        cfg.AddProfile<OrderMapping>();
     }
 }

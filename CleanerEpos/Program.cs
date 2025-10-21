@@ -5,7 +5,6 @@ using CleanerEpos.Entities;
 using CleanerEpos.Helpers;
 using CleanerEpos.Mappings;
 using CleanerEpos.Models;
-using Epos.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

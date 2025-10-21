@@ -1,11 +1,10 @@
 using System.Security.Claims;
-using CleanerEpos.Data;
 using CleanerEpos.Entities;
 using CleanerEpos.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 
-namespace Epos.Helpers;
+namespace CleanerEpos.Helpers;
 
 public static class SecurityDataInitializer
 {

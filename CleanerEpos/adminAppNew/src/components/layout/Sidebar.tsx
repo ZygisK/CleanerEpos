@@ -65,7 +65,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               key={item.to}
               to={item.to}
               onClick={() => {
-                // Close sidebar on mobile after navigation
                 if (window.innerWidth < 1024) {
                   onClose();
                 }
