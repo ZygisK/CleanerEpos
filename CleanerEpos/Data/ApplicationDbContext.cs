@@ -1,6 +1,4 @@
-using System.Transactions;
 using CleanerEpos.Entities;
-using CleanerEpos.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +15,10 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     
     public virtual DbSet<Order> Orders { get; set; }
     public virtual DbSet<OrderItem> OrderItems { get; set; }
+    
+    public virtual DbSet<Transaction> Transactions { get; set; }
+    public virtual DbSet<TransactionItem> TransactionItems { get; set; }
+
 
     
     protected override void OnModelCreating(ModelBuilder builder)

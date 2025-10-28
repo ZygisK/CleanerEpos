@@ -125,3 +125,34 @@ export interface PaginationParams {
   sortBy?: string;
   sortOrder?: 'asc' | 'desc';
 }
+
+// Orders
+export interface OrderItemModel {
+  id: string;
+  productId: string;
+  product?: ProductModel;
+  quantity: number;
+  unitPrice: number;
+  totalPrice: number;
+}
+
+export interface OrderModel {
+  id: string;
+  createdAt: string;
+  tableNumber: number;
+  items: OrderItemModel[];
+  totalAmount: number;
+  status: string;
+  notes?: string | null;
+}
+
+export interface CreateOrderModel {
+  tableNumber: number;
+  items: Array<{
+    productId: string;
+    quantity: number;
+    unitPrice: number;
+    totalPrice: number;
+  }>;
+  notes?: string;
+}

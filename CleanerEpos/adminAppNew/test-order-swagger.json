@@ -1,0 +1,26 @@
+{
+  "tableNumber": 5,
+  "items": [
+    {
+      "productId": "59f4587d-a3d2-4bbc-bb9f-d1a22627ca75",
+      "quantity": 2,
+      "unitPrice": 9,
+      "totalPrice": 18
+    },
+    {
+      "productId": "f91356f9-89e2-4885-abe4-b99197fdd6bd",
+      "quantity": 1,
+      "unitPrice": 7,
+      "totalPrice": 7
+    },
+    {
+      "productId": "a4055c3c-2814-48fb-9e40-eaaaa389b264",
+      "quantity": 1,
+      "unitPrice": 32,
+      "totalPrice": 32
+    }
+  ],
+  "status": "Pending",
+  "notes": "Table 5 - Extra napkins please"
+}
+

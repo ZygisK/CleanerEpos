@@ -10,6 +10,7 @@ import { Users } from './pages/Users';
 import { Products } from './pages/Products';
 import { Categories } from './pages/Categories';
 import { Transactions } from './pages/Transactions';
+import { Orders } from './pages/Orders';
 import { Analytics } from './pages/Analytics';
 import { Menu } from './pages/Menu';
 import { QRCodes } from './pages/QRCodes';
@@ -44,6 +45,7 @@ const App: React.FC = () => {
             <Route path={ROUTES.USERS} element={<Users />} />
             <Route path={ROUTES.PRODUCTS} element={<Products />} />
             <Route path={ROUTES.CATEGORIES} element={<Categories />} />
+            <Route path={ROUTES.ORDERS} element={<Orders />} />
             <Route path={ROUTES.TRANSACTIONS} element={<Transactions />} />
             <Route path={ROUTES.ANALYTICS} element={<Analytics />} />
             <Route path="/qr-codes" element={<QRCodes />} />

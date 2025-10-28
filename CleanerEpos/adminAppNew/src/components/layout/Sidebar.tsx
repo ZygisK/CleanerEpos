@@ -7,6 +7,7 @@ import {
   Users,
   Package,
   BarChart3,
+  ShoppingCart,
   QrCode,
   X,
 } from 'lucide-react';
@@ -20,6 +21,7 @@ interface SidebarProps {
 
 const navItems = [
   { to: ROUTES.HOME, icon: Home, label: 'Home' },
+  { to: ROUTES.ORDERS, icon: ShoppingCart, label: 'Orders' },
   { to: ROUTES.TRANSACTIONS, icon: CreditCard, label: 'Transactions' },
   { to: ROUTES.CATEGORIES, icon: FileText, label: 'Categories' },
   { to: ROUTES.USERS, icon: Users, label: 'Users' },

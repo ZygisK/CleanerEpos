@@ -3,6 +3,7 @@ using System;
 using CleanerEpos.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanerEpos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251028165203_TransactionsMigration")]
+    partial class TransactionsMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
@@ -251,60 +254,6 @@ namespace CleanerEpos.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("CleanerEpos.Entities.Transaction", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Transactions");
-                });
-
-            modelBuilder.Entity("CleanerEpos.Entities.TransactionItem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("TransactionId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("TransactionId");
-
-                    b.ToTable("TransactionItems");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -435,25 +384,6 @@ namespace CleanerEpos.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("CleanerEpos.Entities.TransactionItem", b =>
-                {
-                    b.HasOne("CleanerEpos.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CleanerEpos.Entities.Transaction", "Transaction")
-                        .WithMany("Items")
-                        .HasForeignKey("TransactionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Transaction");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("CleanerEpos.Entities.ApplicationRole", null)
@@ -511,11 +441,6 @@ namespace CleanerEpos.Migrations
                 });
 
             modelBuilder.Entity("CleanerEpos.Entities.Order", b =>
-                {
-                    b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("CleanerEpos.Entities.Transaction", b =>
                 {
                     b.Navigation("Items");
                 });

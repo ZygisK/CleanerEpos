@@ -9,6 +9,7 @@ export const ROUTES = {
   USERS: '/users',
   PRODUCTS: '/products',
   CATEGORIES: '/categories',
+  ORDERS: '/orders',
   TRANSACTIONS: '/transactions',
   ANALYTICS: '/analytics',
   MENU: '/menu', // Menu
@@ -32,4 +33,8 @@ export const API_ENDPOINTS = {
   // Products
   PRODUCTS: '/api/Products',
   PRODUCT_BY_ID: (id: string) => `/api/Products/${id}`,
+
+  // Orders
+  ORDERS: '/api/Orders',
+  ORDER_BY_ID: (id: string) => `/api/Orders/${id}`,
 } as const;

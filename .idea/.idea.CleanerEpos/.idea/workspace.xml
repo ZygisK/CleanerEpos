@@ -9,12 +9,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d5db17e-2123-4a83-a467-9ceb71d05b1d" name="Changes" comment="Order and OrderItem Entity + Model + Migration">
-      <change afterPath="$PROJECT_DIR$/CleanerEpos/Controllers/OrdersController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CleanerEpos/Services/IOrderService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CleanerEpos/Services/OrderService.cs" afterDir="false" />
+    <list default="true" id="1d5db17e-2123-4a83-a467-9ceb71d05b1d" name="Changes" comment="Order Backend">
+      <change afterPath="$PROJECT_DIR$/CleanerEpos/Entities/Transaction.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CleanerEpos/Entities/TransactionItem.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CleanerEpos/Mappings/TransactionMapping.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CleanerEpos/Migrations/20251028165203_TransactionsMigration.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CleanerEpos/Migrations/20251028165203_TransactionsMigration.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CleanerEpos/Models/CreateTransactionModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CleanerEpos/Models/TransactionModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CleanerEpos/adminAppNew/src/pages/Orders.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CleanerEpos/adminAppNew/src/services/orderService.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CleanerEpos/adminAppNew/test-order-swagger.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CleanerEpos/.idea/dataSources/d0cc6387-5e53-40c4-a01e-dbed76facd8f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CleanerEpos/.idea/dataSources/d0cc6387-5e53-40c4-a01e-dbed76facd8f.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CleanerEpos/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CleanerEpos/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CleanerEpos/Helpers/DependencyInjectionExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CleanerEpos/Helpers/DependencyInjectionExtension.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CleanerEpos/Mappings/MappingExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CleanerEpos/Mappings/MappingExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CleanerEpos/adminAppNew/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/CleanerEpos/adminAppNew/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CleanerEpos/adminAppNew/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/CleanerEpos/adminAppNew/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CleanerEpos/adminAppNew/src/components/layout/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/CleanerEpos/adminAppNew/src/components/layout/Sidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CleanerEpos/adminAppNew/src/types/models.ts" beforeDir="false" afterPath="$PROJECT_DIR$/CleanerEpos/adminAppNew/src/types/models.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CleanerEpos/adminAppNew/src/utils/constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/CleanerEpos/adminAppNew/src/utils/constants.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +42,7 @@
     <option name="ROOT_SYNC" value="SYNC" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Users/zygimantas/RiderProjects/CleanerEpos/CleanerEpos/obj/Debug/net8.0/CleanerEpos.AssemblyInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/zygimantas/RiderProjects/CleanerEpos/CleanerEpos/Helpers/DependencyInjectionExtension.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="false" />
   <component name="ProjectColorInfo">{
@@ -106,7 +119,7 @@
       <workItem from="1760041849085" duration="59000" />
       <workItem from="1760041919965" duration="170000" />
       <workItem from="1760042102387" duration="492000" />
-      <workItem from="1760042606900" duration="24414000" />
+      <workItem from="1760042606900" duration="32976000" />
     </task>
     <task id="LOCAL-00002" summary="commit">
       <option name="closed" value="true" />
@@ -156,7 +169,15 @@
       <option name="project" value="LOCAL" />
       <updated>1761053438192</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Order Backend">
+      <option name="closed" value="true" />
+      <created>1761654270322</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1761654270322</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -170,6 +191,7 @@
     <MESSAGE value="2nd commit" />
     <MESSAGE value="." />
     <MESSAGE value="Order and OrderItem Entity + Model + Migration" />
-    <option name="LAST_COMMIT_MESSAGE" value="Order and OrderItem Entity + Model + Migration" />
+    <MESSAGE value="Order Backend" />
+    <option name="LAST_COMMIT_MESSAGE" value="Order Backend" />
   </component>
 </project>
