@@ -12,8 +12,8 @@ public static class DependencyInjectionExtensions
             .AddTransient<ITokenService, TokenService>()
             .AddTransient<ICategoryService, CategoryService>()
             // .AddTransient<ITransactionService, TransactionService>()
-            .AddTransient<IProductService, ProductService>();
-        // .AddTransient<ISupplierService, SupplierService>()
+            .AddTransient<IProductService, ProductService>()
+            .AddTransient<IOrderService, OrderService>();
         // .AddTransient<ITabService, TabService>()
         // .AddTransient<ILayoutObjectsService, LayoutObjectsService>()
         // .AddTransient<IAlertService, AlertService>()
