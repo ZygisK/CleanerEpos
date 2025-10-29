@@ -17,22 +17,41 @@ public class OrderService : IOrderService
         _mapper = mapper;
     }
 
-    public async Task<OrderModel> CreateOrder(OrderModel model)
+    public async Task<OrderModel> SaveOrder(OrderModel model)
     {
-        var entity = _mapper.Map<Order>(model);
-        entity.Id = Guid.NewGuid();
-        entity.CreatedAt = DateTime.UtcNow;
+        var entity = await _context.Orders
+            .Include(o => o.Items)
+            .ThenInclude(i => i.Product)
+            .Where(x => x.Id == model.Id)
+            .FirstOrDefaultAsync();
 
-        foreach (var item in entity.Items)
+        if (entity == null)
         {
-            item.Id = Guid.NewGuid();
-            item.OrderId = entity.Id;
+            entity = _mapper.Map<Order>(model);
+            entity.Id = Guid.NewGuid();
+            entity.CreatedAt = DateTime.UtcNow;
+
+            foreach (var item in entity.Items)
+            {
+                item.Id = Guid.NewGuid();
+                item.OrderId = entity.Id;
+            }
+
+            entity.TotalAmount = entity.Items.Sum(i => i.TotalPrice);
+            _context.Add(entity);
+        }
+        else
+        {
+            _mapper.Map(model, entity);
+            _context.Entry(entity).State = EntityState.Modified;
         }
 
-        entity.TotalAmount = entity.Items.Sum(i => i.TotalPrice);
-
-        await _context.Orders.AddAsync(entity);
         await _context.SaveChangesAsync();
+    
+        entity = await _context.Orders
+            .Include(o => o.Items)
+            .ThenInclude(i => i.Product)
+            .FirstOrDefaultAsync(x => x.Id == entity.Id);
 
         return _mapper.Map<OrderModel>(entity);
     }

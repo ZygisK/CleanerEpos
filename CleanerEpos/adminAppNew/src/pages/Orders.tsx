@@ -2,14 +2,16 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Table } from '@/components/ui/Table';
+import { Modal } from '@/components/ui/Modal';
 import { ConfirmModal } from '@/components/ui/ConfirmModal';
 import { Input } from '@/components/ui/Input';
-import { OrderModel, ProductModel } from '@/types/models';
-import { getAllOrders, deleteOrder } from '@/services/orderService';
+import { OrderModel, ProductModel, CreateTransactionModel } from '@/types/models';
+import { getAllOrders, deleteOrder, saveOrder } from '@/services/orderService';
 import { getAllProducts } from '@/services/productService';
+import { transactionService } from '@/services/transactionService';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
-import { Eye, RefreshCw, Trash2 } from 'lucide-react';
+import { Eye, RefreshCw, Trash2, Check, XCircle } from 'lucide-react';
 
 export const Orders: React.FC = () => {
   const [orders, setOrders] = useState<OrderModel[]>([]);
@@ -17,8 +19,12 @@ export const Orders: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [search, setSearch] = useState<string>('');
   const [selectedOrder, setSelectedOrder] = useState<OrderModel | null>(null);
+  const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  const [isVoidModalOpen, setIsVoidModalOpen] = useState<boolean>(false);
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
+  const [isVoiding, setIsVoiding] = useState<boolean>(false);
 
   const fetchOrders = async () => {
     setIsLoading(true);
@@ -63,6 +69,14 @@ export const Orders: React.FC = () => {
     );
   }, [orders, search]);
 
+  const getStatusColor = (status: string) => {
+    const lower = status.toLowerCase();
+    if (lower === 'pending') return 'bg-yellow-100 text-yellow-800';
+    if (lower === 'completed' || lower === 'approved') return 'bg-green-100 text-green-800';
+    if (lower === 'voided' || lower === 'cancelled') return 'bg-red-100 text-red-800';
+    return 'bg-gray-100 text-gray-800';
+  };
+
   const openDelete = (order: OrderModel) => {
     setSelectedOrder(order);
     setIsDeleteModalOpen(true);
@@ -82,6 +96,63 @@ export const Orders: React.FC = () => {
     } finally {
       setIsDeleting(false);
     }
+  };
+
+  const handleProcessOrder = async () => {
+    if (!selectedOrder) return;
+    setIsProcessing(true);
+    try {
+      // Create transaction from order
+      const txModel: CreateTransactionModel = {
+        status: 'Completed',
+        items: selectedOrder.items.map(item => ({
+          productId: item.productId,
+          quantity: item.quantity,
+          unitPrice: item.unitPrice,
+          totalPrice: item.totalPrice
+        }))
+      };
+
+      await transactionService.createTransaction(txModel);
+      
+      // Update order status to Completed
+      const updatedOrder = { ...selectedOrder, status: 'Completed' };
+      await saveOrder(updatedOrder);
+      
+      toast.success('Order processed and transaction created');
+      setIsViewModalOpen(false);
+      setSelectedOrder(null);
+      fetchOrders();
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Failed to process order');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleVoidOrder = async () => {
+    if (!selectedOrder) return;
+    setIsVoiding(true);
+    try {
+      // Update order status to Voided
+      const updatedOrder = { ...selectedOrder, status: 'Voided' };
+      await saveOrder(updatedOrder);
+      
+      toast.success('Order voided');
+      setIsVoidModalOpen(false);
+      setIsViewModalOpen(false);
+      setSelectedOrder(null);
+      fetchOrders();
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Failed to void order');
+    } finally {
+      setIsVoiding(false);
+    }
+  };
+
+  const openViewModal = (order: OrderModel) => {
+    setSelectedOrder(order);
+    setIsViewModalOpen(true);
   };
 
   return (
@@ -141,14 +212,14 @@ export const Orders: React.FC = () => {
                 key: 'totalAmount',
                 label: 'Total',
                 align: 'right',
-                render: (o) => <span>£{o.totalAmount.toFixed(2)}</span>,
+                render: (o) => <span>€{o.totalAmount.toFixed(2)}</span>,
               },
               {
                 key: 'status',
                 label: 'Status',
                 render: (o) => (
                   <span
-                    className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-800"
+                    className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${getStatusColor(o.status)}`}
                   >
                     {o.status}
                   </span>
@@ -160,26 +231,51 @@ export const Orders: React.FC = () => {
                 align: 'right',
                 render: (o) => (
                   <div className="flex items-center justify-end gap-2">
-                    <Button
-                      variant="secondary"
+                    <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        setSelectedOrder(o);
+                        openViewModal(o);
                       }}
+                      className="p-1 text-blue-600 hover:bg-blue-50 rounded"
+                      title="View Order"
                     >
-                      <Eye className="w-4 h-4 mr-2" />
-                      View
-                    </Button>
-                    <Button
-                      variant="danger"
+                      <Eye className="w-4 h-4" />
+                    </button>
+                    {o.status.toLowerCase() !== 'completed' && o.status.toLowerCase() !== 'approved' && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openViewModal(o);
+                        }}
+                        className="p-1 text-green-600 hover:bg-green-50 rounded"
+                        title="Process Order"
+                      >
+                        <Check className="w-4 h-4" />
+                      </button>
+                    )}
+                    {o.status.toLowerCase() === 'completed' && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedOrder(o);
+                          setIsVoidModalOpen(true);
+                        }}
+                        className="p-1 text-orange-600 hover:bg-orange-50 rounded"
+                        title="Void Order"
+                      >
+                        <XCircle className="w-4 h-4" />
+                      </button>
+                    )}
+                    <button
                       onClick={(e) => {
                         e.stopPropagation();
                         openDelete(o);
                       }}
+                      className="p-1 text-red-600 hover:bg-red-50 rounded"
+                      title="Delete Order"
                     >
-                      <Trash2 className="w-4 h-4 mr-2" />
-                      Delete
-                    </Button>
+                      <Trash2 className="w-4 h-4" />
+                    </button>
                   </div>
                 ),
               },
@@ -188,20 +284,41 @@ export const Orders: React.FC = () => {
         </div>
       </Card>
 
-      {/* View Modal (simple) */}
-      {selectedOrder && (
-        <Card>
-          <div className="p-4 space-y-3">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold">Order #{selectedOrder.id.slice(0,8)}</h2>
-              <Button variant="secondary" onClick={() => setSelectedOrder(null)}>Close</Button>
+      {/* View/Process Modal */}
+      <Modal
+        isOpen={isViewModalOpen}
+        onClose={() => {
+          setIsViewModalOpen(false);
+          setSelectedOrder(null);
+        }}
+        title={selectedOrder ? `Order #${selectedOrder.id.slice(0, 8)}` : ''}
+        size="lg"
+      >
+        {selectedOrder && (
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <p className="text-gray-500">Created</p>
+                <p className="font-medium">{format(new Date(selectedOrder.createdAt), 'yyyy-MM-dd HH:mm')}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">Table Number</p>
+                <p className="font-medium">#{selectedOrder.tableNumber}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">Status</p>
+                <p className={`font-medium inline-flex items-center rounded-full px-2 py-0.5 text-xs ${getStatusColor(selectedOrder.status)}`}>
+                  {selectedOrder.status}
+                </p>
+              </div>
+              {selectedOrder.notes && (
+                <div>
+                  <p className="text-gray-500">Notes</p>
+                  <p className="font-medium">{selectedOrder.notes}</p>
+                </div>
+              )}
             </div>
-            <div className="text-sm text-gray-600">
-              <p>Created: {format(new Date(selectedOrder.createdAt), 'yyyy-MM-dd HH:mm')}</p>
-              <p>Table: #{selectedOrder.tableNumber}</p>
-              <p>Status: {selectedOrder.status}</p>
-              {selectedOrder.notes && <p>Notes: {selectedOrder.notes}</p>}
-            </div>
+
             <div>
               <h3 className="font-medium mb-2">Items</h3>
               <div className="overflow-x-auto">
@@ -221,31 +338,59 @@ export const Orders: React.FC = () => {
                         <tr key={it.id}>
                           <td className="px-4 py-2">{product?.name ?? it.productId}</td>
                           <td className="px-4 py-2 text-right">{it.quantity}</td>
-                          <td className="px-4 py-2 text-right">£{it.unitPrice.toFixed(2)}</td>
-                          <td className="px-4 py-2 text-right">£{it.totalPrice.toFixed(2)}</td>
+                          <td className="px-4 py-2 text-right">€{it.unitPrice.toFixed(2)}</td>
+                          <td className="px-4 py-2 text-right">€{it.totalPrice.toFixed(2)}</td>
                         </tr>
                       );
                     })}
                   </tbody>
+                  <tfoot className="bg-gray-50">
+                    <tr>
+                      <td colSpan={3} className="px-4 py-2 text-right font-semibold">Total</td>
+                      <td className="px-4 py-2 text-right font-semibold">€{selectedOrder.totalAmount.toFixed(2)}</td>
+                    </tr>
+                  </tfoot>
                 </table>
               </div>
             </div>
-            <div className="flex items-center justify-end gap-2">
-              {/* Future: processing actions (status updates, create transaction) */}
+
+            <div className="flex items-center justify-end gap-2 pt-4 border-t">
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  setIsViewModalOpen(false);
+                  setSelectedOrder(null);
+                }}
+              >
+                Close
+              </Button>
+              {selectedOrder.status.toLowerCase() !== 'completed' && selectedOrder.status.toLowerCase() !== 'approved' && (
+                <Button
+                  variant="primary"
+                  onClick={handleProcessOrder}
+                  isLoading={isProcessing}
+                >
+                  <Check className="w-4 h-4 mr-2" />
+                  Process Order
+                </Button>
+              )}
             </div>
           </div>
-        </Card>
-      )}
+        )}
+      </Modal>
 
       <ConfirmModal
         isOpen={isDeleteModalOpen}
-        onClose={() => setIsDeleteModalOpen(false)}
+        onClose={() => {
+          setIsDeleteModalOpen(false);
+          setSelectedOrder(null);
+        }}
         onConfirm={handleDelete}
         title="Delete Order"
         message={
           selectedOrder ? (
             <div>
-              <p>Delete order <strong>#{selectedOrder.id.slice(0,8)}</strong>?</p>
+              <p>Are you sure you want to delete order <strong>#{selectedOrder.id.slice(0, 8)}</strong>?</p>
               <p className="text-red-600 mt-2">This action cannot be undone.</p>
             </div>
           ) : (
@@ -256,8 +401,29 @@ export const Orders: React.FC = () => {
         isLoading={isDeleting}
         variant="danger"
       />
+
+      <ConfirmModal
+        isOpen={isVoidModalOpen}
+        onClose={() => {
+          setIsVoidModalOpen(false);
+          setSelectedOrder(null);
+        }}
+        onConfirm={handleVoidOrder}
+        title="Void Order"
+        message={
+          selectedOrder ? (
+            <div>
+              <p>Are you sure you want to void order <strong>#{selectedOrder.id.slice(0, 8)}</strong>?</p>
+              <p className="text-orange-600 mt-2">This will mark the order as voided and prevent further processing.</p>
+            </div>
+          ) : (
+            'Void this order?'
+          )
+        }
+        confirmText="Void Order"
+        isLoading={isVoiding}
+        variant="warning"
+      />
     </div>
   );
 };
-
-

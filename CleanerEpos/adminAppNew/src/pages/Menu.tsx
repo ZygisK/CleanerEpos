@@ -247,7 +247,7 @@ export const Menu: React.FC = () => {
                   {/* Price and Add to Cart */}
                   <div className="flex items-center justify-between pt-2">
                     <span className="text-2xl font-bold text-blue-600">
-                      ${product.price.toFixed(2)}
+                      €{product.price.toFixed(2)}
                     </span>
                     <Button
                       onClick={() => addToCart(product)}
@@ -291,7 +291,7 @@ export const Menu: React.FC = () => {
                         {item.product.name}
                       </h4>
                       <p className="text-sm text-gray-600">
-                        ${item.product.price.toFixed(2)} each
+                        €{item.product.price.toFixed(2)} each
                       </p>
                     </div>
 
@@ -317,7 +317,7 @@ export const Menu: React.FC = () => {
                     {/* Item Total */}
                     <div className="text-right min-w-[80px]">
                       <p className="font-semibold text-gray-900">
-                        ${(item.product.price * item.quantity).toFixed(2)}
+                        €{(item.product.price * item.quantity).toFixed(2)}
                       </p>
                     </div>
 
@@ -337,7 +337,7 @@ export const Menu: React.FC = () => {
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-lg font-medium">Total:</span>
                   <span className="text-2xl font-bold text-blue-600">
-                    ${cartTotal.toFixed(2)}
+                    €{cartTotal.toFixed(2)}
                   </span>
                 </div>
 

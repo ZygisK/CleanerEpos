@@ -154,7 +154,7 @@ export const Products: React.FC = () => {
     {
       key: 'price',
       label: 'Price',
-      render: (product: ProductModel) => `$${product.price.toFixed(2)}`,
+      render: (product: ProductModel) => `€${product.price.toFixed(2)}`,
     },
     {
       key: 'category',

@@ -19,9 +19,9 @@ public class OrdersController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> Create([FromBody] OrderModel model)
+    public async Task<ActionResult> Save([FromBody] OrderModel model)
     {
-        var created = await _orderService.CreateOrder(model);
+        var created = await _orderService.SaveOrder(model);
         return Ok(created);
     }
 

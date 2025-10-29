@@ -1,5 +1,5 @@
 import { apiClient } from './api';
-import { TransactionModel } from '@/types/models';
+import { TransactionModel, CreateTransactionModel } from '@/types/models';
 
 export const transactionService = {
   async getTransactions(): Promise<TransactionModel[]> {
@@ -12,8 +12,6 @@ export const transactionService = {
     }
   },
 
-
-  // GET /api/Transactions/{id}
   async getTransaction(id: string): Promise<TransactionModel> {
     try {
       const response = await apiClient.get(`/api/Transactions/${id}`);
@@ -24,7 +22,16 @@ export const transactionService = {
     }
   },
 
-  // DELETE /api/Transactions/{id}
+  async createTransaction(model: CreateTransactionModel): Promise<TransactionModel> {
+    try {
+      const response = await apiClient.post('/api/Transactions', model);
+      return response.data;
+    } catch (error) {
+      console.error('Error creating transaction:', error);
+      throw error;
+    }
+  },
+
   async deleteTransaction(id: string): Promise<void> {
     try {
       await apiClient.delete(`/api/Transactions/${id}`);

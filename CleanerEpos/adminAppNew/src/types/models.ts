@@ -86,7 +86,7 @@ export interface CreateProductModel {
 // Transaction
 export interface TransactionModel {
   id: string;
-  userId: string;
+  userId?: string | null;
   user?: ApplicationUserModel;
   totalAmount: number;
   status: string;
@@ -102,6 +102,16 @@ export interface TransactionItemModel {
   quantity: number;
   unitPrice: number;
   totalPrice: number;
+}
+
+export interface CreateTransactionModel {
+  status?: string;
+  items: Array<{
+    productId: string;
+    quantity: number;
+    unitPrice: number;
+    totalPrice: number;
+  }>;
 }
 
 // API Response 

@@ -29,6 +29,15 @@ export const createOrder = async (model: CreateOrderModel): Promise<OrderModel> 
   }
 };
 
+export const saveOrder = async (model: OrderModel): Promise<OrderModel> => {
+  try {
+    const res = await apiClient.post<OrderModel>(API_ENDPOINTS.ORDERS, model);
+    return res.data;
+  } catch (error) {
+    throw new Error(handleApiError(error));
+  }
+};
+
 export const deleteOrder = async (id: string): Promise<void> => {
   try {
     await apiClient.delete(API_ENDPOINTS.ORDER_BY_ID(id));
@@ -37,9 +46,5 @@ export const deleteOrder = async (id: string): Promise<void> => {
   }
 };
 
-// Placeholder for future: update status and process → create transaction
-export const updateOrderStatus = async (_id: string, _status: string): Promise<void> => {
-  throw new Error('Not implemented: backend endpoint for updating order status is missing');
-};
 
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CreditCard, TrendingUp, DollarSign, Search, Trash2 } from 'lucide-react';
+import { CreditCard, TrendingUp, Euro, Search, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -38,8 +38,6 @@ export const Transactions: React.FC = () => {
     return (
       transaction.id.toLowerCase().includes(searchLower) ||
       transaction.status.toLowerCase().includes(searchLower) ||
-      transaction.user?.fullName?.toLowerCase().includes(searchLower) ||
-      transaction.user?.userName?.toLowerCase().includes(searchLower) ||
       transaction.totalAmount.toString().includes(searchLower)
     );
   });
@@ -76,20 +74,17 @@ export const Transactions: React.FC = () => {
       ),
     },
     {
-      key: 'user',
-      label: 'Customer',
+      key: 'items',
+      label: 'Items',
       render: (transaction: TransactionModel) => (
-        <div>
-          <div className="font-medium">{transaction.user?.fullName || 'Unknown'}</div>
-          <div className="text-sm text-gray-500">{transaction.user?.userName}</div>
-        </div>
+        <span>{transaction.items?.length ?? 0} items</span>
       ),
     },
     {
       key: 'totalAmount',
       label: 'Amount',
       render: (transaction: TransactionModel) => (
-        <span className="font-semibold">${transaction.totalAmount.toFixed(2)}</span>
+        <span className="font-semibold">€{transaction.totalAmount.toFixed(2)}</span>
       ),
     },
     {
@@ -122,14 +117,13 @@ export const Transactions: React.FC = () => {
       align: 'right' as const,
       render: (transaction: TransactionModel) => (
         <div className="flex items-center gap-2 justify-end">
-          <Button
-            variant="secondary"
-            size="sm"
+          <button
             onClick={() => handleDeleteTransactionClick(transaction)}
-            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+            className="p-1 text-red-600 hover:bg-red-50 rounded"
+            title="Delete Transaction"
           >
             <Trash2 className="w-4 h-4" />
-          </Button>
+          </button>
         </div>
       ),
     },
@@ -150,14 +144,14 @@ export const Transactions: React.FC = () => {
             <div>
               <p className="text-sm font-medium text-gray-600">Today's Sales</p>
               <p className="text-2xl font-bold text-gray-900 mt-2">
-                ${transactions
+                €{transactions
                   .filter(t => new Date(t.createdAt).toDateString() === new Date().toDateString())
                   .reduce((sum, t) => sum + t.totalAmount, 0)
                   .toFixed(2)}
               </p>
             </div>
             <div className="p-3 rounded-lg bg-green-100">
-              <DollarSign className="w-6 h-6 text-green-600" />
+              <Euro className="w-6 h-6 text-green-600" />
             </div>
           </div>
         </Card>
@@ -179,7 +173,7 @@ export const Transactions: React.FC = () => {
             <div>
               <p className="text-sm font-medium text-gray-600">Average Order</p>
               <p className="text-2xl font-bold text-gray-900 mt-2">
-                ${transactions.length > 0 
+                €{transactions.length > 0 
                   ? (transactions.reduce((sum, t) => sum + t.totalAmount, 0) / transactions.length).toFixed(2)
                   : '0.00'}
               </p>
@@ -238,7 +232,7 @@ export const Transactions: React.FC = () => {
               <div className="mt-2 p-3 bg-gray-50 rounded-lg">
                 <p><strong>Transaction ID:</strong> {transactionToDelete.id.slice(0, 8)}...</p>
                 <p><strong>Customer:</strong> {transactionToDelete.user?.fullName || 'Unknown'}</p>
-                <p><strong>Amount:</strong> ${transactionToDelete.totalAmount.toFixed(2)}</p>
+                <p><strong>Amount:</strong> €{transactionToDelete.totalAmount.toFixed(2)}</p>
                 <p><strong>Status:</strong> {transactionToDelete.status}</p>
               </div>
             )}
